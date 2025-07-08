@@ -50,7 +50,7 @@ export default function SearchBar({ onSearch, onClear, loading }: SearchBarProps
           type="text"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
-          placeholder="Enter country (e.g., US, IN, UK)"
+          placeholder="Enter country (e.g., India,United States,United Kingdom)"
           className="block w-full pl-4 pr-4 py-4 text-lg border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
           disabled={loading}
         />
