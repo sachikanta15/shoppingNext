@@ -21,21 +21,23 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  const handleSearch = async (query: string, country: string, sort: 'asc' | 'desc') => {
+  const handleSearch = (query: string, country: string, sort?: 'asc' | 'desc') => {
     if (!query.trim() || !country.trim()) return;
-    
+
     setLoading(true);
     setHasSearched(true);
-    
-    try {
-      const results = await searchProducts(query, country, sort);
-      setProducts(results);
-    } catch (error) {
-      console.error('Search failed:', error);
-      setProducts([]);
-    } finally {
-      setLoading(false);
-    }
+
+    searchProducts(query, country, sort ?? 'asc')
+      .then(results => {
+        setProducts(results);
+      })
+      .catch(error => {
+        console.error('Search failed:', error);
+        setProducts([]);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleClearSearch = () => {
@@ -69,7 +71,6 @@ export default function Home() {
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
             Search for any product and compare prices from top retailers. Get the best deals delivered to your doorstep.
           </p>
-          
           <SearchBar onSearch={handleSearch} onClear={handleClearSearch} loading={loading} />
         </div>
 
